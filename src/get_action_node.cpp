@@ -37,6 +37,7 @@
  * CUSTOM INCLUDES
  * ******************************************************************/
 // #include <the_drink_pack/DrinkClass.h> // Might want to have a class
+#include <map>
 #include <robotic_pusher/getVelocity.h>
 #include <robotic_pusher/getWeightType.h>
 #include <robotic_pusher/spawnObject.h>
@@ -44,6 +45,14 @@
 using namespace std;
 
 #define object_name "random"
+#define desired_distance 10 // cm??
+
+/*  Weight ids  */
+std::map<std::string, int> weight_id{
+    {"light", 0},
+    {"medium", 1},
+    {"heavy", 2},
+};
 
 /*  Global parameters for the clients   */
 ros::ServiceClient client_spawn;
@@ -52,9 +61,24 @@ ros::ServiceClient client_weight;
 robotic_pusher::spawnObject object;
 robotic_pusher::getWeightType srv;
 
-float get_action() {
-  // Temporary
-  return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+float get_action(int weight) {
+  switch (weight) {
+  case 0:
+    return 0.2f;
+    break;
+  case 1:
+    return 0.5f;
+    break;
+  case 2:
+    return 0.7f;
+    break;
+  default:
+    ROS_INFO_STREAM("Unknown weight id...");
+    break;
+  }
+  return 0.f;
+  // Temporary, random between 0.0 and 1.0
+  // return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
 }
 
 bool get_velocity(robotic_pusher::spawnObject::Request &req,
@@ -73,18 +97,18 @@ bool get_velocity(robotic_pusher::spawnObject::Request &req,
     return false;
   }
 
-  string object_weight;
+  int object_weight_id;
   /*  Call the service to get the weight of the spawned object  */
   if (client_weight.call(srv)) {
     ROS_INFO_STREAM("Response: " << srv.response.weight_type);
-    object_weight = srv.response.weight_type;
+    object_weight_id = weight_id[srv.response.weight_type];
   } else {
     ROS_ERROR_STREAM("Failed to get the weight from the object");
     return false;
   }
 
   // Change this function to get different actions
-  res.impact_velocity = get_action();
+  res.impact_velocity = get_action(object_weight_id);
 
   return true;
 }
