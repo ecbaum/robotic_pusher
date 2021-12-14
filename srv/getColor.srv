@@ -1,7 +1,7 @@
-/*--------------Service to get the color of the spawned object--------------*/
+###Service to get the color of the spawned object
 
-//true if we want to get the color, initializes the color_estimator_node
+#true if we want to get the color, initializes the color_estimator_node
 bool get_color
 ---
-//returns one of the defined colors as string and lower case letters
+#returns one of the defined colors as string and lower case letters
 string object_color

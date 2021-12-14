@@ -1,7 +1,7 @@
-/*--------------Service to get the estimated required impact velocity--------------*/
+###Service to get the estimated required impact velocity
 
-//true if we want to get the velocity with what the object should be hit, initializes the get_action_node
+#true if we want to get the velocity with what the object should be hit, initializes the get_action_node
 bool get_velocity
 ---
-//returns estimated impact_velocity with what the cube should be hit to get to the desired distance
+#returns estimated impact_velocity with what the cube should be hit to get to the desired distance
 float32 impact_velocity
