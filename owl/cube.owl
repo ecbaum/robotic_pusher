@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#"
+     xml:base="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#color -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#color">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#cube"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#darkbrown -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#darkbrown">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#color"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#woodCube"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#gold -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#gold">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#color"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#goldCube"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#grey -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#grey">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#color"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#stoneCube"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#heavy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#heavy">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#weightClass"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#goldCube"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#heavyCube"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#stoneCube"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#light -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#light">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#weightClass"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#cartonCube"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#lightCube"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#plasticCube"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#lightbrown -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#lightbrown">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#color"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#cartonCube"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#medium -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#medium">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#weightClass"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#mediumCube"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#snowCube"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#woodCube"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#red -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#red">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#color"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#plasticCube"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#weightClass -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#weightClass"/>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#white -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#white">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#color"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#snowCube"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#cartonCube -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#cartonCube">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#lightCube"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#cube -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#cube"/>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#goldCube -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#goldCube">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#heavyCube"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#heavyCube -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#heavyCube">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#cube"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#lightCube -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#lightCube">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#cube"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#mediumCube -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#mediumCube">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#cube"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#plasticCube -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#plasticCube">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#lightCube"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#snowCube -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#snowCube">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#mediumCube"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#stoneCube -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#stoneCube">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#heavyCube"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#woodCube -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#woodCube">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#mediumCube"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
