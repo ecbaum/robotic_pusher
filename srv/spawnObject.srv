@@ -1,3 +1,4 @@
 string model_name
+string position
 ---
 int32 reply

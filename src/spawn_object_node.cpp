@@ -3,10 +3,13 @@
 
 bool spawn(robotic_pusher::spawnObject::Request &req,
            robotic_pusher::spawnObject::Response &res) {
+
     std::string model_name = req.model_name;
+    std::string position = req.position;
+
     std::string directory_to_models = "/home/user/simulation_ws/src/tiago_simulation/tiago_gazebo/models/";
     std::string model_path = directory_to_models + model_name + "/" + model_name + ".sdf";
-    std::string spawn_message = "rosrun gazebo_ros spawn_model -file " + model_path + " -sdf 1 -model my_object";
+    std::string spawn_message = "rosrun gazebo_ros spawn_model -file " + model_path + " -sdf " + position + " -model my_object";
 
     system("rosservice call gazebo/delete_model '{model_name: my_object}'");
     system(spawn_message.c_str());
