@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <!--#>>>>TODO: load the yaml file control_param.yaml-->
+  <rosparam command="load" file="$(find robotic_pusher)/configs/params.yaml" />
+  <!--#>>>>TODO:LAUNCH TURTLE CONTROL NODE.-->
+   <!--#>>>><node name="spawn_object_node" pkg="robotic_pusher" type="spawn_object_node" args="-d $(find robotic_pusher)/src/spawn_object_node.cpp"/>
+    -->
+</launch>
