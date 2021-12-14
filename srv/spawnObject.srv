@@ -1,4 +1,9 @@
+/*--------------Service to spawn an object(cube) on the table--------------*/
+
+//model_name=<object_name> will spawn a specific object
+//model_name=random will spawn one of the defined objects randomly
 string model_name
 string position
 ---
+//reply=1 if spawning succesful
 int32 reply
