@@ -1,7 +1,7 @@
-###Service to get the estimated required impact velocity
+###Service that sends the velocity to the tiago and returns the position
 
-#true if we want to get the velocity with what the object should be hit, initializes the get_action_node
-bool get_velocity
----
-#returns estimated impact_velocity with what the cube should be hit to get to the desired distance
+#estimated impact_velocity with what the cube should be hit
 float32 impact_velocity
+---
+#returns the xyz position of the cube after being hit
+geometry_msgs/Point position
