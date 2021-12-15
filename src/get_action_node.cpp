@@ -27,11 +27,11 @@
  ********************************************************************/
 #include <ros/ros.h>
 #include <std_msgs/String.h>
-#include <tf/transform_broadcaster.h>
-#include <tf/transform_listener.h>
-#include <tf_conversions/tf_eigen.h>
-#include <visualization_msgs/Marker.h>
-#include <visualization_msgs/MarkerArray.h>
+// #include <tf/transform_broadcaster.h>
+// #include <tf/transform_listener.h>
+// #include <tf_conversions/tf_eigen.h>
+// #include <visualization_msgs/Marker.h>
+// #include <visualization_msgs/MarkerArray.h>
 
 /*********************************************************************
  * CUSTOM INCLUDES
@@ -81,8 +81,8 @@ float get_action(int weight) {
   // return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
 }
 
-bool get_velocity(robotic_pusher::spawnObject::Request &req,
-                  robotic_pusher::spawnObject::Response &res) {
+bool get_velocity(robotic_pusher::getVelocity::Request &req,
+                  robotic_pusher::getVelocity::Response &res) {
 
   // Pretty dumb check but why not
   if (!req.get_velocity) {
@@ -124,7 +124,8 @@ int main(int argc, char **argv) {
 
   // Clients
   client_spawn = n.serviceClient<robotic_pusher::spawnObject>("spawn_object");
-  client_weight = n.serviceClient<robotic_pusher::getWeightType>("get_weight");
+  client_weight =
+      n.serviceClient<robotic_pusher::getWeightType>("weight_type_service");
 
   srv.request.get_weight_class = true;
   object.request.model_name = object_name;
