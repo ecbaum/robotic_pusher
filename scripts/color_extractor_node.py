@@ -10,8 +10,8 @@ import cv2
 class color_extractor:
 
   def __init__(self):
-    self.image_pub = rospy.Publisher("extracted_color",Image, queue_size=10)
-    self.image_sub = rospy.Subscriber("/xtion/rgb/image_color",Image,self.callback)
+    self.pub = rospy.Publisher("extracted_color", String, queue_size=10)
+    self.sub = rospy.Subscriber("/xtion/rgb/image_color", Image, self.callback)
     self.bridge = CvBridge()
 
   def callback(self, img_msg):
@@ -20,18 +20,32 @@ class color_extractor:
     except CvBridgeError as e:
         print(e)
 
-    x = 100 # pixels to extract from
-    y = 50 
 
-    rgb = cv2_img[x,y,0:3]
+    if rospy.has_param('/color_extraction_pixel_location/x'):
+        x = rospy.get_param('/color_extraction_pixel_location/x')
+    else:
+        x = 200 # default value
+    if rospy.has_param('/color_extraction_pixel_location/y'):
+        y = rospy.get_param('/color_extraction_pixel_location/y')
+    else:
+        y = 200 # default value
+    
+
+    rgb = cv2_img[x, y, 0:3]
 
     rospy.loginfo("rgb: " + str(rgb))
+    
+    self.pub.publish(str(rgb))
 
-if __name__ == '__main__':
+def main(args):
     extractor = color_extractor()
-    rospy.init_node('color_extractor_node', anonymous=True)
+    rospy.init_node('color_extractor_node')
 
     try:
         rospy.spin()
     except KeyboardInterrupt:
         print("Shutting down")
+
+if __name__ == '__main__':
+    main(sys.argv)
+
