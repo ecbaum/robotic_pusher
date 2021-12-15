@@ -30,7 +30,7 @@ bool get_weight_type(robotic_pusher::getWeightType::Request &req, robotic_pusher
     // Example Query: ?- rdf_has(WeightClass, rdfs:domain, cube:'goldCube').
     PrologQuery weightbdgs = pl.query("rdf_has(WeightClass, rdfs:domain, cube:'"+object+"')");
     it=weightbdgs.begin();
-    it++;
+    it++; // Skip first entry as this is the color property
     bdg = *it;
     weightClass = bdg["WeightClass"].toString();
     cout << "Weight type (heavy, medium or light) = "<< weightClass << endl;
