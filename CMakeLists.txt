@@ -60,6 +60,7 @@ add_service_files(
     DIRECTORY srv
     FILES
 	spawnObject.srv
+	getColor.srv
     )
 
 
