@@ -12,7 +12,11 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  geometry_msgs
   message_runtime
+  rosprolog
+  actionlib
+  gazebo_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -60,6 +64,9 @@ add_service_files(
     DIRECTORY srv
     FILES
 	spawnObject.srv
+	getColor.srv
+	getWeightType.srv
+	getVelocity.srv
     )
 
 
@@ -74,6 +81,7 @@ add_service_files(
 generate_messages(
   DEPENDENCIES
   std_msgs
+  geometry_msgs
 )
 
 ################################################
