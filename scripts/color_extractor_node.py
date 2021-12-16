@@ -38,6 +38,10 @@ class color_extractor:
         rospy.loginfo("Pixel: [" + str(self.x) + ", " + str(self.y) + "], Val: "  + str(rgb) )
     
     def decodeRGB(self):
+        """
+        Gazebo/Red : [  2   2 124]
+        
+        """
         color = str(self.color_value) # TODO: implement dictionary between rgb values and color names
         return color
 
