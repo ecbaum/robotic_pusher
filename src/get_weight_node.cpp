@@ -7,10 +7,18 @@
 
 using namespace std;
 
+/* 
+This node takes the color of color_extractor_node.py, creates an instance in the ontology
+and gives the weight class and color to the get_action_node.cpp
+*/ 
+
 // Explore possible queries
     // rdf_has(S, rdfs:subPropertyOf, cube:'color').
     // rdf_has(S, rdfs:domain, cube:'goldCube').
+    // rdf_has(cube:'gold', rdfs:domain, Object)
+    // rdf_has(WeightClass, rdfs:domain, cube:'goldCube')..
     // owl_subclass_of(A, cube:'cube').
+    // owl_subclass_of(cube:'gold', A).
 
 string color;
 
@@ -20,21 +28,14 @@ bool get_weight_type(robotic_pusher::getWeightType::Request &req, robotic_pusher
     string object;
     string weightClass;
 
-    // Example Query: ?- rdf_has(cube:'gold', rdfs:domain, Object).
-    PrologQuery classbdgs = pl.query("rdf_has(cube:'"+color+"', rdfs:domain, Object)");
+    // Example Query: ?- owl_subclass_of(cube:'gold', A).
+    PrologQuery classbdgs = pl.query("owl_subclass_of(cube:'"+color+"', WeightClass)");
     PrologQuery::iterator it=classbdgs.begin();
     PrologBindings bdg = *it;
-    object = bdg["Object"].toString();
-    cout << "Object = "<< object << endl;
-
-    // Example Query: ?- rdf_has(WeightClass, rdfs:domain, cube:'goldCube').
-    PrologQuery weightbdgs = pl.query("rdf_has(WeightClass, rdfs:domain, cube:'"+object+"')");
-    it=weightbdgs.begin();
-    it++; // Skip first entry as this is the color property
-    bdg = *it;
     weightClass = bdg["WeightClass"].toString();
-    cout << "Weight type (heavy, medium or light) = "<< weightClass << endl;
+    cout << "WeightClass (heavy, medium or light) = "<< weightClass << endl;
     res.weight_type = weightClass;
+    res.object_color = color;
 
     return true;
 }
@@ -49,7 +50,7 @@ int main(int argc, char **argv) {
     srv.request.get_color = true;
     if (colorclient.call(srv))
     {
-        ROS_INFO("Color I got is "+srv.response.object_color);
+        ROS_INFO("Color I got is %s", srv.response.object_color.c_str());
         color = srv.response.object_color;
     }
     else
