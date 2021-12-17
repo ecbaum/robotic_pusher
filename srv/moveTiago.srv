@@ -1,0 +1,7 @@
+###Service to move the tiago
+
+#Pose of the desired location
+geometry_msgs/Pose desPose
+---
+#reply=true if tiago moved to desired pose
+bool reply

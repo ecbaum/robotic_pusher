@@ -1,5 +1,4 @@
 #include <robotic_pusher/getVelocity.h>
-#include "std_msgs/String.h"
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <control_msgs/FollowJointTrajectoryAction.h>
@@ -127,7 +126,7 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
         else
         {
             ROS_ERROR("Failed to call service /gazebo/get_model_state");
-            return 1;
+            return false;
         }
     }
     // Give final cube position as response
@@ -139,13 +138,13 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
         else
         {
             ROS_ERROR("Failed to call service /gazebo/get_model_state");
-            return 1;
+            return false;
         }
     return true;
 }
 
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "run_test_push_node");
+  ros::init(argc, argv, "pusher_node");
   ros::NodeHandle nh;
   if (!ros::Time::waitForValid(ros::WallDuration(
           30.0))) // NOTE: Important when using simulated clock
@@ -153,29 +152,6 @@ int main(int argc, char **argv) {
     ROS_FATAL("Timed-out waiting for valid time.");
     return EXIT_FAILURE;
   }
-  /****************************************************************/
-  /***********************Move the torso up************************/
-  /****************************************************************/
-  ROS_INFO("First, grow up");
-  JointClient torsoClient("/torso_controller/follow_joint_trajectory", true);
-  // wait for the action server to come up
-  torsoClient.waitForServer();
-  control_msgs::FollowJointTrajectoryGoal torso_goal;
-  torso_goal.trajectory.header.stamp = ros::Time::now();
-  torso_goal.trajectory.joint_names.push_back("torso_lift_joint");
-  torso_goal.trajectory.points.resize(1);
-  torso_goal.trajectory.points[0].positions.resize(1);
-  torso_goal.trajectory.points[0].positions[0] = 0.35;
-  torso_goal.trajectory.points[0].time_from_start = ros::Duration(2.0);
-  torsoClient.sendGoal(torso_goal);
-  ROS_INFO("Starting to move uuuup");
-  torsoClient.waitForResult();
-  if (torsoClient.getState() == actionlib::SimpleClientGoalState::SUCCEEDED) {
-    ROS_INFO("...I am high");
-  }
-  // Wait task to be finished
-  ROS_INFO("Wait shortly to make sure previous task is finished.");
-  ros::Duration(1).sleep();
 
   /****************************************************************/
   /***********************Call pusher_service**********************/
