@@ -18,7 +18,7 @@
 :- use_module(library('semweb/rdfs')).
 :- use_module(library('semweb/rdf_db')).
 
-:- rdf_db:rdf_register_ns(cube, 'http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-8#', [keep(true)]).
+:- rdf_db:rdf_register_ns(cube, 'http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#', [keep(true)]).
 
 %%%%%%%%%%%%%% Custom computables %%%%%%%%%%%%%%%%%%%%%%
 

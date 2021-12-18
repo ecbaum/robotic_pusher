@@ -35,7 +35,7 @@ bool get_weight_type(robotic_pusher::getWeightType::Request &req,
         ROS_INFO("Color I got is %s", srv.response.object_color.c_str());
         color = srv.response.object_color;
     } else {
-        ROS_ERROR("Failed to get drink id");
+        ROS_ERROR("Failed to get color of Object");
         return 1;
     }
     
@@ -43,19 +43,20 @@ bool get_weight_type(robotic_pusher::getWeightType::Request &req,
     string object;
     string weightClass;
 
-    // Example Query: ?- owl_subclass_of(cube:'gold', A).
+    // Example Query: ?- owl_subclass_of(cube_ontology:'gold', A).
     PrologQuery classbdgs =
-        pl.query("owl_subclass_of(cube:'" + color + "', WeightClass)");
+        pl.query("owl_subclass_of(cube_ontology:'" + color + "', WeightClass)");
     PrologQuery::iterator it = classbdgs.begin();
+    it++;
+    it++;
     PrologBindings bdg = *it;
     weightClass = bdg["WeightClass"].toString();
 
     // Remove the syntax in front of the output
-    string substring = "http://www.semanticweb.org/janmorlock/ontologies/2021/10/untitled-ontology-8#";
+    string substring = "http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#";
     std::size_t pos = weightClass.find(substring); // Find the starting index of substring in the string, else it returns std::string::npos
     if(pos !=std::string::npos)
         weightClass.erase(pos,substring.length());
-    cout << "Ind = "<< weightClass << endl;
 
     cout << "WeightClass (heavy, medium or light) = " << weightClass << endl;
     res.weight_type = weightClass;

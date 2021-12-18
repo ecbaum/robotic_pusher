@@ -67,6 +67,7 @@ add_service_files(
 	getColor.srv
 	getWeightType.srv
 	getVelocity.srv
+	moveTiago.srv
     )
 
 
@@ -167,6 +168,30 @@ add_dependencies(spawn_object_node
     ${${PROJECT_NAME}_EXPORTED_TARGETS}
     ${catkin_EXPORTED_TARGETS})
 target_link_libraries(spawn_object_node ${catkin_LIBRARIES})
+
+add_executable(get_weight_node src/get_weight_node.cpp)
+add_dependencies(get_weight_node 
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS})
+target_link_libraries(get_weight_node ${catkin_LIBRARIES})
+
+add_executable(initialize_tiago_node src/initialize_tiago_node.cpp)
+add_dependencies(initialize_tiago_node 
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS})
+target_link_libraries(initialize_tiago_node ${catkin_LIBRARIES})
+
+add_executable(pusher_node src/pusher_node.cpp)
+add_dependencies(pusher_node 
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS})
+target_link_libraries(pusher_node ${catkin_LIBRARIES})
+
+add_executable(get_action_node src/get_action_node.cpp)
+add_dependencies(get_action_node 
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS})
+target_link_libraries(get_action_node ${catkin_LIBRARIES})
 
 
 ## Rename C++ executable without prefix
