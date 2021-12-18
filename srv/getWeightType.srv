@@ -5,3 +5,4 @@ bool get_weight_class
 ---
 #returns either "light","medium","heavy" as mass_class based on the knowledge from the ontology
 string weight_type
+string object_color
