@@ -14,7 +14,7 @@ class color_extractor:
     def __init__(self):
 
         self.subscriber = rospy.Subscriber("/xtion/rgb/image_color", Image, self.callback)
-        self.service = rospy.Service('/robotic_pusher/get_color', getColor, self.returnColor)
+        self.service = rospy.Service('get_color', getColor, self.returnColor)
 
         self.bridge = CvBridge()
         self.color_value = []
