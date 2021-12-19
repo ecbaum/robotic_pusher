@@ -75,8 +75,7 @@ float get_action(string weight, PrologClient pl) {
     PrologQuery::iterator iterator = classbdgs.begin();
     bdg = *iterator;
     string distance = bdg["X"].toString();
-    /*  Not sure this split works but it should [BUG?]  */
-    distance = distance.substr(distance.find("#"), distance.length());
+    distance = distance.substr(distance.find("#") + 1, distance.length());
     distance.erase(0, 1);
     distance.erase(distance.size() - 1);
     float distance_traveled = std::stof(distance);
@@ -87,8 +86,7 @@ float get_action(string weight, PrologClient pl) {
     iterator = classbdgs.begin();
     bdg = *iterator;
     string velocity = bdg["X"].toString();
-    /*  Not sure this split works but it should [BUG?]  */
-    velocity = velocity.substr(velocity.find("#"), velocity.length());
+    velocity = velocity.substr(velocity.find("#") + 1, velocity.length());
     velocity.erase(0, 1);
     velocity.erase(velocity.size() - 1);
     float used_velocity = std::stof(velocity);
