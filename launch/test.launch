@@ -2,19 +2,25 @@
 <launch>
 
     <arg name="gzpose" default="-x 0.0 -y 0.0 -z 0.0 -R 0.0 -P 0.0 -Y 0.0"/>
-    <arg name="mode" default="t0"/>
 
     <!-- rosprolog for storing & providing ontology services -->
     <param name="initial_package" type="string" value="robotic_pusher" />
     <node name="rosprolog" pkg="rosprolog" type="rosprolog_node" output="screen"/>
 
     <!-- spawn robot in simulation -->
-    <include file="$(find tiago_gazebo)/launch/tiago_gazebo.launch">
+    <include file="$(find tiago_2dnav_gazebo)/launch/tiago_navigation.launch">
+        <arg name="public_sim" value="true"/>
+        <arg name="map" value="/home/user/catkin_ws/src/robotic_pusher_ROS/tiago_maps/configurations/2021-12-17_210032"/>
+        <arg name="world" value="pusher_world"/>
+        <arg name="gzpose" value="$(arg gzpose)"/>
+    </include>
+
+    <!-->include file="$(find tiago_gazebo)/launch/tiago_gazebo.launch">
         <arg name="public_sim" value="true"/>
         <arg name="robot" value="steel"/>
         <arg name="world" value="pusher_world"/>
         <arg name="gzpose" value="$(arg gzpose)"/>
-    </include>
+    </include-->
 
     <rosparam command="load" file="$(find robotic_pusher)/configs/params.yaml" />
     <!-->node name="gazebo" pkg="gazebo_ros" type="gazebo" output="screen"/-->
@@ -23,7 +29,4 @@
     <node name="pusher_node" pkg="robotic_pusher" type="pusher_node" args="-d $(find robotic_pusher)/src/pusher_node.cpp" output="screen"/>
     <node name="initialize_tiago_node" pkg="robotic_pusher" type="initialize_tiago_node" args="-d $(find robotic_pusher)/src/initialize_tiago_node.cpp" output="screen"/>
     <node name="color_extractor_node" pkg="robotic_pusher" type="color_extractor_node.py" args="-d $(find robotic_pusher)/scripts/color_extractor_node.py"/>
-    <!-->node name="get_action_node" pkg="robotic_pusher" type="get_action_node" arg="$(arg mode)" args="-d $(find robotic_pusher)/src/get_action_node.cpp" output="screen">
-        <param name="name" value="bumblebeeCenter" />
-    </node-->
 </launch>

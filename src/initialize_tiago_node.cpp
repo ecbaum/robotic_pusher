@@ -72,6 +72,7 @@ bool move_to_des_pose(robotic_pusher::moveTiago::Request  &req, robotic_pusher::
     // Wait task to be finished
     ROS_INFO("Wait shortly to make sure previous task is finished.");
     ros::Duration(1).sleep();
+    res.reply = true;
     return true;
 }
 
