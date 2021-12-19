@@ -31,10 +31,12 @@
 /*********************************************************************
  * CUSTOM INCLUDES
  * ******************************************************************/
+#include <geometry_msgs/Pose.h>
 #include <getopt.h>
 #include <map>
 #include <robotic_pusher/getVelocity.h>
 #include <robotic_pusher/getWeightType.h>
+#include <robotic_pusher/moveTiago.h>
 #include <robotic_pusher/spawnObject.h>
 #include <rosprolog/rosprolog_client/PrologClient.h>
 #include <signal.h>
@@ -73,6 +75,8 @@ float get_action(string weight, PrologClient pl) {
     PrologQuery::iterator iterator = classbdgs.begin();
     bdg = *iterator;
     string distance = bdg["X"].toString();
+    /*  Not sure this split works but it should [BUG?]  */
+    distance = distance.substr(distance.find("#"), distance.length());
     distance.erase(0, 1);
     distance.erase(distance.size() - 1);
     float distance_traveled = std::stof(distance);
@@ -83,6 +87,8 @@ float get_action(string weight, PrologClient pl) {
     iterator = classbdgs.begin();
     bdg = *iterator;
     string velocity = bdg["X"].toString();
+    /*  Not sure this split works but it should [BUG?]  */
+    velocity = velocity.substr(velocity.find("#"), velocity.length());
     velocity.erase(0, 1);
     velocity.erase(velocity.size() - 1);
     float used_velocity = std::stof(velocity);
@@ -115,14 +121,14 @@ float get_action(string weight, PrologClient pl) {
   return a + t * (b - a);
 }
 
-void load_ontology(PrologClient pl) {
+int load_ontology(PrologClient pl) {
   string line;
 
   ifstream input_file(file_name);
   if (!input_file.is_open()) {
     cerr << "Could not open the file - '" << file_name
          << "' Using ontology without instance" << endl;
-    return;
+    return 1;
   }
 
   while (getline(input_file, line)) {
@@ -130,6 +136,7 @@ void load_ontology(PrologClient pl) {
   }
 
   input_file.close();
+  return 0;
 }
 
 string find_instance_name(string instance_name, string Class, PrologClient pl,
@@ -212,7 +219,7 @@ int main(int argc, char **argv) {
     }
     break;
   }
-  ROS_INFO_STREAM("Training: " << training);
+  ROS_INFO_STREAM("Training: " << (bool)training);
 
   ros::init(argc, argv, "get_action_node", ros::init_options::AnonymousName);
 
@@ -226,7 +233,8 @@ int main(int argc, char **argv) {
   }
 
   /*  Load ontology file if it exist  */
-  load_ontology(pl);
+  /*  If there is no ontology to load, force training -> 1*/
+  training = (1 * load_ontology(pl));
 
   // Clients
   ros::ServiceClient client_spawn =
@@ -235,15 +243,37 @@ int main(int argc, char **argv) {
       n.serviceClient<robotic_pusher::getWeightType>("weight_type_service");
   ros::ServiceClient client_push =
       n.serviceClient<robotic_pusher::getVelocity>("pusher_service");
+  ros::ServiceClient init =
+      n.serviceClient<robotic_pusher::moveTiago>("moveTiago_service");
 
   ROS_INFO_STREAM("Connected to all services...");
 
   robotic_pusher::spawnObject object_object;
   robotic_pusher::getWeightType weight_object;
   robotic_pusher::getVelocity velocity_object;
+  robotic_pusher::moveTiago move_object;
 
   weight_object.request.get_weight_class = true;
   object_object.request.model_name = object_name;
+
+  geometry_msgs::Pose tiago_init_pose;
+  tiago_init_pose.position.x = 0.0;
+  tiago_init_pose.position.y = 0.0;
+  tiago_init_pose.position.z = 0.0;
+  tiago_init_pose.orientation.x = 0.0;
+  tiago_init_pose.orientation.y = 0.0;
+  tiago_init_pose.orientation.z = 0.0;
+  tiago_init_pose.orientation.w = 1.0;
+  move_object.request.desPose = tiago_init_pose;
+
+  /*  Initialize Tiago in position    */
+  if (init.call(move_object)) {
+    ROS_INFO_STREAM(
+        "Tiago in correct position?: " << (bool)move_object.response.reply);
+  } else {
+    ROS_ERROR_STREAM("Failed to move Tiago to init position, exiting...");
+    return 1;
+  }
 
   /*  Open file to save ontology  */
   ofstream ont_File;
