@@ -33,28 +33,26 @@ bool move_to_des_pose(robotic_pusher::moveTiago::Request  &req, robotic_pusher::
     client.sendGoal(goal);
     client.waitForResult();
     if (client.getState() == actionlib::SimpleClientGoalState::SUCCEEDED) {
-        ROS_INFO("I am achieved the desired Pose!!");
+        ROS_INFO("I am at the desired Pose!!");
     }
     else {
         ROS_ERROR("Failed to move to the desired Pose :(");
         return false;
     }
-    return true;
-}
 
-int main(int argc, char **argv) {
-    ros::init(argc, argv, "intialize_tiago");
-    ros::NodeHandle nh;
     if (!ros::Time::waitForValid(ros::WallDuration(
             30.0))) // NOTE: Important when using simulated clock
     {
         ROS_FATAL("Timed-out waiting for valid time.");
-        return EXIT_FAILURE;
+        return false;
     }
     /****************************************************************/
     /***********************Move the torso up************************/
     /****************************************************************/
-    ROS_INFO("First, grow up");
+    // Wait task to be finished
+    ROS_INFO("Wait shortly to make sure previous task is finished.");
+    ros::Duration(1).sleep();
+    ROS_INFO("Now that I arrived I can grow up");
     JointClient torsoClient("/torso_controller/follow_joint_trajectory", true);
     // wait for the action server to come up
     torsoClient.waitForServer();
@@ -74,8 +72,15 @@ int main(int argc, char **argv) {
     // Wait task to be finished
     ROS_INFO("Wait shortly to make sure previous task is finished.");
     ros::Duration(1).sleep();
+    return true;
+}
+
+int main(int argc, char **argv) {
+    ros::init(argc, argv, "intialize_tiago");
+    ros::NodeHandle nh;
 
     ros::ServiceServer service = nh.advertiseService("moveTiago_service", move_to_des_pose);
+    ros::spin();
 
     return 0;
 }

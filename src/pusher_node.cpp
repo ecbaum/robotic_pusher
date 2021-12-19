@@ -146,17 +146,11 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
 int main(int argc, char **argv) {
   ros::init(argc, argv, "pusher_node");
   ros::NodeHandle nh;
-  if (!ros::Time::waitForValid(ros::WallDuration(
-          30.0))) // NOTE: Important when using simulated clock
-  {
-    ROS_FATAL("Timed-out waiting for valid time.");
-    return EXIT_FAILURE;
-  }
 
   /****************************************************************/
   /***********************Call pusher_service**********************/
   /****************************************************************/
   ros::ServiceServer service = nh.advertiseService("pusher_service", push_object_get_distance);
-
+  ros::spin();
   return 0;
 }
