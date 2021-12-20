@@ -13,6 +13,7 @@
         <arg name="map" value="/home/user/catkin_ws/src/robotic_pusher_ROS/tiago_maps/configurations/2021-12-17_210032"/>
         <arg name="world" value="pusher_world"/>
         <arg name="gzpose" value="$(arg gzpose)"/>
+        <arg name="robot" value="steel"/>
     </include>
 
     <!-->include file="$(find tiago_gazebo)/launch/tiago_gazebo.launch">

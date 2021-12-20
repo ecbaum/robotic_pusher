@@ -32,6 +32,7 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
         ROS_INFO("Velocity I got is %f, huiiiiii", (double)velocity);
     }
     else {
+        ROS_ERROR("Velocity has to be in interval [0,1]");
         return false;
     }
 

@@ -287,6 +287,10 @@ int main(int argc, char **argv) {
       return 1;
     }
 
+    // Wait task to be finished
+    ROS_INFO("Wait shortly to make sure previous task is finished.");
+    ros::Duration(3).sleep();
+
     string object_weight_type;
     string object_weight_color;
     /*  Call the service to get the weight of the spawned object  */
