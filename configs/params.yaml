@@ -4,5 +4,11 @@ spawn_position:
   z: 1.5
 
 color_extraction_pixel_location:
-  x: 100
-  y: 200
+  x: 360
+  y: 0
+
+spawn_cube_names:
+  name1: "red_cube"
+  name2: "blue_cube"
+  name3: "green_cube"
+  name4: "yellow_cube"

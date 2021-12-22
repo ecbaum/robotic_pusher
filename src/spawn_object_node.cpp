@@ -31,14 +31,48 @@ bool spawn(robotic_pusher::spawnObject::Request &req,
     return true;
     }
 
+    std::string cube_name1, cube_name2, cube_name3, cube_name4;
+
+    if (ros::param::has("spawn_cube_names/name1")) {
+        ros::param::get("spawn_cube_names/name1", cube_name1);
+    } else {
+        ROS_ERROR_STREAM("param: spawn_cube_names/name1, doesn't exist");
+    return true;
+    }
+
+    if (ros::param::has("spawn_cube_names/name2")) {
+        ros::param::get("spawn_cube_names/name2", cube_name2);
+    } else {
+        ROS_ERROR_STREAM("param: spawn_cube_names/name2, doesn't exist");
+    return true;
+    }
+
+    if (ros::param::has("spawn_cube_names/name3")) {
+        ros::param::get("spawn_cube_names/name3", cube_name3);
+    } else {
+        ROS_ERROR_STREAM("param: spawn_cube_names/name3, doesn't exist");
+    return true;
+    }
+
+    if (ros::param::has("spawn_cube_names/name4")) {
+        ros::param::get("spawn_cube_names/name4", cube_name4);
+    } else {
+        ROS_ERROR_STREAM("param: spawn_cube_names/name4, doesn't exist");
+    return true;
+    }
+
+
+
     if(model_name == "random"){
         double r = ((double)std::rand()/(double)RAND_MAX);;
-        if(r < 0.33){
-            model_name = "red_cube";
-        }else if(r < 0.66){
-            model_name = "green_cube";
+        if(r < 0.25){
+            model_name = cube_name1;
+        }else if(r < 0.5){
+            model_name = cube_name2;
+        }else if(r < 0.75){
+            model_name = cube_name3;
         }else {
-            model_name = "blue_cube";
+            model_name = cube_name4;
         }
     }
     std::string position = "-x " + std::to_string(x) + " -y " + std::to_string(y) + " -z " + std::to_string(z);

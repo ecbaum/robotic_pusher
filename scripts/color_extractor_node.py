@@ -19,21 +19,23 @@ class color_extractor:
         self.bridge = CvBridge()
         self.color_value = []
 
-        self.x = 200 # default value
-        self.y = 200 # default value
+        self.x = 360 # default value
+        self.y = 0 # default value
 
         if rospy.has_param('/color_extraction_pixel_location/x'): #If params are loaded, read them
             self.x = rospy.get_param('/color_extraction_pixel_location/x')
         if rospy.has_param('/color_extraction_pixel_location/y'):
             self.y = rospy.get_param('/color_extraction_pixel_location/y')
         
-        self.color_value_list = [[102, 102, 102], [45, 45, 45], [23, 23, 23], [10, 10, 10], [0, 0, 0], [2, 2, 214], [7, 27, 90], 
-                                [124, 2, 2], [71, 45, 13], [2, 124, 2], [6, 62, 122], [0, 122, 122], [29, 135, 138], [0, 85, 85], 
-                                [2, 25, 41], [102, 0, 102], [102, 102, 0], [51, 0, 34]]
-        self.color_name_list = ["White", "Grey", "DarkGrey", "FlatBlack", "Black", "Red", "BrightRed", 
-                               "Blue", "SkyBlue", "Green", "Orange", "Yellow", "ZincYellow", "DarkYellow", 
-                               "Gold", "Purple", "Turqoise", "Indigo"]
-      
+        #self.color_value_list = [[102, 102, 102], [45, 45, 45], [23, 23, 23], [10, 10, 10], [0, 0, 0], [2, 2, 214], [7, 27, 90], 
+        #                        [124, 2, 2], [71, 45, 13], [2, 124, 2], [6, 62, 122], [0, 122, 122], [29, 135, 138], [0, 85, 85], 
+        #                        [2, 25, 41], [102, 0, 102], [102, 102, 0], [51, 0, 34]]
+        #self.color_name_list = ["White", "Grey", "DarkGrey", "FlatBlack", "Black", "Red", "BrightRed", 
+        #                       "Blue", "SkyBlue", "Green", "Orange", "Yellow", "ZincYellow", "DarkYellow", 
+        #                       "Gold", "Purple", "Turqoise", "Indigo"]
+        
+        self.color_value_list = [[102, 102, 102], [0, 0, 0], [2, 2, 124],[124, 2, 2], [2, 124, 2], [0, 122, 122]]
+        self.color_name_list = ["White", "Black", "Red", "Blue", "Green", "Yellow"]
         """
         Color / bgr8
         Gazebo/White:       [102 102 102]  idx: 0
