@@ -64,7 +64,8 @@ bool spawn(robotic_pusher::spawnObject::Request &req,
 
 
     if(model_name == "random"){
-        double r = ((double)std::rand()/(double)RAND_MAX);;
+        double r = ((double)std::rand()/(double)RAND_MAX);
+        ROS_INFO("random number: %f", r);
         if(r < 0.25){
             model_name = cube_name1;
         }else if(r < 0.5){

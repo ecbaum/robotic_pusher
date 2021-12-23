@@ -15,7 +15,7 @@ bool move_to_des_pose(robotic_pusher::moveTiago::Request  &req, robotic_pusher::
     /****************************************************************/
     /***********************Move to table****************************/
     /****************************************************************/
-    ROS_INFO("Starting moving to table");
+    ROS_INFO("Initializing Tiago...");
     MoveClient client("move_base", true); // true -> don't need ros::spin()
     client.waitForServer();
     move_base_msgs::MoveBaseGoal goal;
@@ -33,7 +33,6 @@ bool move_to_des_pose(robotic_pusher::moveTiago::Request  &req, robotic_pusher::
     client.sendGoal(goal);
     client.waitForResult();
     if (client.getState() == actionlib::SimpleClientGoalState::SUCCEEDED) {
-        ROS_INFO("I am at the desired Pose!!");
     }
     else {
         ROS_ERROR("Failed to move to the desired Pose :(");
@@ -50,9 +49,7 @@ bool move_to_des_pose(robotic_pusher::moveTiago::Request  &req, robotic_pusher::
     /***********************Move the torso up************************/
     /****************************************************************/
     // Wait task to be finished
-    ROS_INFO("Wait shortly to make sure previous task is finished.");
     ros::Duration(1).sleep();
-    ROS_INFO("Now that I arrived I can grow up");
     JointClient torsoClient("/torso_controller/follow_joint_trajectory", true);
     // wait for the action server to come up
     torsoClient.waitForServer();
@@ -64,15 +61,13 @@ bool move_to_des_pose(robotic_pusher::moveTiago::Request  &req, robotic_pusher::
     torso_goal.trajectory.points[0].positions[0] = 0.35;
     torso_goal.trajectory.points[0].time_from_start = ros::Duration(2.0);
     torsoClient.sendGoal(torso_goal);
-    ROS_INFO("Starting to move uuuup");
     torsoClient.waitForResult();
     if (torsoClient.getState() == actionlib::SimpleClientGoalState::SUCCEEDED) {
-        ROS_INFO("...I am high");
     }
     // Wait task to be finished
-    ROS_INFO("Wait shortly to make sure previous task is finished.");
     ros::Duration(1).sleep();
     res.reply = true;
+    ROS_INFO("Initializing Tiago DONE");
     return true;
 }
 

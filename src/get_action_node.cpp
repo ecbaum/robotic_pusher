@@ -217,7 +217,6 @@ int main(int argc, char **argv) {
     }
     break;
   }
-  ROS_INFO_STREAM("Training: " << (bool)training);
 
   ros::init(argc, argv, "get_action_node", ros::init_options::AnonymousName);
 
@@ -233,6 +232,9 @@ int main(int argc, char **argv) {
   /*  Load ontology file if it exist  */
   /*  If there is no ontology to load, force training -> 1*/
   training = (1 * load_ontology(pl));
+  training = 1;
+
+  ROS_INFO_STREAM("Training: " << (bool)training);
 
   // Clients
   ros::ServiceClient client_spawn =
@@ -307,14 +309,14 @@ int main(int argc, char **argv) {
     if (training) {
       // Random between 0.f and 1.f
       velocity_object.request.impact_velocity =
-          static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+         static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
     } else {
       velocity_object.request.impact_velocity =
           get_action(object_weight_type, pl);
     }
 
     // Wait task to be finished
-    ROS_INFO("Wait shortly to make sure previous task is finished.");
+    ROS_INFO_STREAM("Wait shortly to make sure previous task is finished.");
     ros::Duration(1).sleep();
 
     float traveled_distance;
@@ -323,7 +325,7 @@ int main(int argc, char **argv) {
       float y = velocity_object.response.position.y;
       float z = velocity_object.response.position.z;
       traveled_distance = sqrtf(x * x + y * y + z * z);
-      ROS_INFO_STREAM("Response: " << traveled_distance);
+      ROS_INFO_STREAM("Traveled_distance: " << traveled_distance);
     } else {
       ROS_ERROR_STREAM("Failed to get the position from the object");
       return 1;
@@ -333,7 +335,7 @@ int main(int argc, char **argv) {
       update_onotology(ont_File, traveled_distance,
                        velocity_object.request.impact_velocity,
                        object_weight_color, pl);
-  }
+    }
   /*    Save ontology here   */
   ont_File.close();
 

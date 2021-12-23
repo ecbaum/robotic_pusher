@@ -14,7 +14,7 @@
 typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> JointClient;
 
 // helper function, constrains the the variable x between the lower value a and higher value b
-float constrain(float &x, const float &a, const float &b) {
+float constrain(float x, const float &a, const float &b) {
   assert(a<b);
   if (x < a) {
     x = a;
@@ -50,16 +50,16 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     arm_goal.trajectory.joint_names.push_back("arm_5_joint");
     arm_goal.trajectory.joint_names.push_back("arm_6_joint");
     arm_goal.trajectory.joint_names.push_back("arm_7_joint");
-    arm_goal.trajectory.points.resize(3);
+    arm_goal.trajectory.points.resize(4);
 
     // Start Position
     int index = 0;
     // Positions
     arm_goal.trajectory.points[index].positions.resize(7);
-    arm_goal.trajectory.points[index].positions[0] = constrain(velocity, 0.07, 1.57);
+    arm_goal.trajectory.points[index].positions[0] = constrain(1.57-(1.57-0.07)*velocity, 0.07, 1.57);
     arm_goal.trajectory.points[index].positions[1] = 0.0;
     arm_goal.trajectory.points[index].positions[2] = 1.5;
-    arm_goal.trajectory.points[index].positions[3] = constrain(velocity, 0.0, 2.29);
+    arm_goal.trajectory.points[index].positions[3] = constrain(2.29*velocity, 0.0, 2.29);
     arm_goal.trajectory.points[index].positions[4] = -1.57;
     arm_goal.trajectory.points[index].positions[5] = 0.0;
     arm_goal.trajectory.points[index].positions[6] = 0.0;
@@ -74,8 +74,8 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     arm_goal.trajectory.points[index].positions[3] = 0.0;
     // Velocities
     arm_goal.trajectory.points[index].velocities.resize(7);
-    arm_goal.trajectory.points[index].velocities[0] = velocity / 2;
-    arm_goal.trajectory.points[index].velocities[3] = velocity / 2;
+    arm_goal.trajectory.points[index].velocities[0] = velocity*4;
+    arm_goal.trajectory.points[index].velocities[3] = velocity*4;
     // To be reached 4 second after starting along the trajectory
     arm_goal.trajectory.points[index].time_from_start = ros::Duration(3.0);
 
@@ -83,12 +83,17 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     index++;
     arm_goal.trajectory.points[index] = arm_goal.trajectory.points[0];
     // Positions
-    arm_goal.trajectory.points[index].positions[0] = 1.75;
-    arm_goal.trajectory.points[index].positions[3] = -0.15;
+    arm_goal.trajectory.points[index].positions[0] = 1.7;
+    arm_goal.trajectory.points[index].positions[3] = -0.1;
     // To be reached 6 second after starting along the trajectory
-    arm_goal.trajectory.points[index].time_from_start = ros::Duration(4.0);
+    arm_goal.trajectory.points[index].time_from_start = ros::Duration(3.8);
 
-    // while(ros::ok()){
+    // Get back to initial position
+    index++;
+    arm_goal.trajectory.points[index] = arm_goal.trajectory.points[0];
+    // To be reached 6 second after starting along the trajectory
+    arm_goal.trajectory.points[index].time_from_start = ros::Duration(5.0);
+
     arm_goal.trajectory.header.stamp = ros::Time::now();
     armClient.sendGoal(arm_goal);
     ROS_INFO("Starting Movement now");
