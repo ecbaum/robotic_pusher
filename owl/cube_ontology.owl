@@ -29,14 +29,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Gold -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Gold">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#heavy"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Green -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Green">
@@ -49,6 +41,14 @@
 
     <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Red">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#medium"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Yellow -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Yellow">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#heavy"/>
     </owl:Class>
     
 
@@ -94,18 +94,18 @@
     
 
 
-    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#gold1 -->
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#yellow1 -->
 
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#gold1">
-        <rdf:type rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Gold"/>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#yellow1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Yellow"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#gold2 -->
+    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#yellow2 -->
 
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#gold2">
-        <rdf:type rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Gold"/>
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#yellow2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Yellow"/>
     </owl:NamedIndividual>
 </rdf:RDF>
 

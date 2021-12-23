@@ -289,7 +289,7 @@ int main(int argc, char **argv) {
 
     // Wait task to be finished
     ROS_INFO("Wait shortly to make sure previous task is finished.");
-    ros::Duration(3).sleep();
+    ros::Duration(1).sleep();
 
     string object_weight_type;
     string object_weight_color;
@@ -312,6 +312,10 @@ int main(int argc, char **argv) {
       velocity_object.request.impact_velocity =
           get_action(object_weight_type, pl);
     }
+
+    // Wait task to be finished
+    ROS_INFO("Wait shortly to make sure previous task is finished.");
+    ros::Duration(1).sleep();
 
     float traveled_distance;
     if (client_push.call(velocity_object)) {
