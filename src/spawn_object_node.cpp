@@ -62,7 +62,7 @@ bool spawn(robotic_pusher::spawnObject::Request &req,
     }
 
 
-
+    srand(time(NULL)); 
     if(model_name == "random"){
         double r = ((double)std::rand()/(double)RAND_MAX);
         ROS_INFO("random number: %f", r);
@@ -78,7 +78,7 @@ bool spawn(robotic_pusher::spawnObject::Request &req,
     }
     std::string position = "-x " + std::to_string(x) + " -y " + std::to_string(y) + " -z " + std::to_string(z);
 
-    std::string directory_to_models = "/home/user/catkin_ws/src/robotic_pusher_ROS/models/";
+    std::string directory_to_models = "/home/user/catkin_ws/src/robotic_pusher/models/";
     std::string model_path = directory_to_models + model_name + "/model.sdf";
 
     std::string spawn_message = "rosrun gazebo_ros spawn_model -file " + model_path + " -sdf " + position + " -model push_box";
