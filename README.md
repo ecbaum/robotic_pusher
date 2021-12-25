@@ -1,4 +1,4 @@
-### robotic_pusher_ROS
+### robotic_pusher
 ROS package for interacting with objects, learning their weight and pushing them to a desired distance
 
 Done in simulation with Gazebo and TIAGo robot
