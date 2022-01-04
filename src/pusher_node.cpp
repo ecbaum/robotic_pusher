@@ -74,7 +74,7 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     arm_goal.trajectory.points[index].positions[3] = 0.0;
     // Velocities
     arm_goal.trajectory.points[index].velocities.resize(7);
-    arm_goal.trajectory.points[index].velocities[0] = velocity*4;
+    arm_goal.trajectory.points[index].velocities[0] = velocity*4; //TODO
     arm_goal.trajectory.points[index].velocities[3] = velocity*4;
     // To be reached 4 second after starting along the trajectory
     arm_goal.trajectory.points[index].time_from_start = ros::Duration(3.0);

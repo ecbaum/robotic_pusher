@@ -46,7 +46,7 @@ using namespace std;
 
 #define object_name "random"
 #define file_name "ont_file.txt"
-string ontology_name = "cube";
+string ontology_name = "cube"; //TODO
 #define desired_distance 10 // cm??
 
 /*  Weight ids  */
@@ -232,7 +232,7 @@ int main(int argc, char **argv) {
   /*  Load ontology file if it exist  */
   /*  If there is no ontology to load, force training -> 1*/
   training = (1 * load_ontology(pl));
-  training = 1;
+  training = 1; //TODO
 
   ROS_INFO_STREAM("Training: " << (bool)training);
 
@@ -307,7 +307,7 @@ int main(int argc, char **argv) {
     }
 
     if (training) {
-      // Random between 0.f and 1.f
+      // Random between 0.f and 1.f //TODO
       velocity_object.request.impact_velocity =
          static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
     } else {
@@ -334,7 +334,7 @@ int main(int argc, char **argv) {
     if (training)
       update_onotology(ont_File, traveled_distance,
                        velocity_object.request.impact_velocity,
-                       object_weight_color, pl);
+                       object_weight_color, pl); //TODO
     }
   /*    Save ontology here   */
   ont_File.close();
