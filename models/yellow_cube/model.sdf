@@ -4,14 +4,14 @@
       <static>0</static>
       <link name='link'>
         <inertial>
-          <mass>1</mass>
+          <mass>0.2</mass>
           <inertia>
-            <ixx>0.00015</ixx>
+            <ixx>0.15</ixx>
             <ixy>0.000000</ixy>
             <ixz>0.000000</ixz>
-            <iyy>0.00015</iyy>
+            <iyy>0.15</iyy>
             <iyz>0.000000</iyz>
-            <izz>0.00015</izz>
+            <izz>0.15</izz>
           </inertia>
         </inertial>
         <collision name='collision'>
@@ -20,21 +20,18 @@
               <size>0.35 0.35 0.35</size>
             </box>
           </geometry>
+          <max_contacts>10</max_contacts>
           <surface>
             <friction>
               <ode>
-                <mu>0.003</mu>
-                <mu2>0.003</mu2>
+                <mu>0.03</mu>
+                <mu2>0.03</mu2>
               </ode>
             </friction>
             <contact>
-              <ode>
-                <kp>1000000.0</kp>
-                <kd>100.0</kd>
-                <max_vel>1.0</max_vel>
-                <min_depth>0.002</min_depth>
-              </ode>
+              <ode/>
             </contact>
+            <bounce/>
           </surface>
         </collision>
         <visual name='visual'>

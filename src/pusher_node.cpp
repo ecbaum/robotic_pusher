@@ -74,8 +74,8 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     arm_goal.trajectory.points[index].positions[3] = 0.0;
     // Velocities
     arm_goal.trajectory.points[index].velocities.resize(7);
-    arm_goal.trajectory.points[index].velocities[0] = velocity*4; //TODO
-    arm_goal.trajectory.points[index].velocities[3] = velocity*4;
+    arm_goal.trajectory.points[index].velocities[0] = 2+velocity*4; //TODO
+    arm_goal.trajectory.points[index].velocities[3] = 2+velocity*4;
     // To be reached 4 second after starting along the trajectory
     arm_goal.trajectory.points[index].time_from_start = ros::Duration(3.0);
 
@@ -86,7 +86,7 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     arm_goal.trajectory.points[index].positions[0] = 1.7;
     arm_goal.trajectory.points[index].positions[3] = -0.1;
     // To be reached 6 second after starting along the trajectory
-    arm_goal.trajectory.points[index].time_from_start = ros::Duration(3.8);
+    arm_goal.trajectory.points[index].time_from_start = ros::Duration(4);
 
     // Get back to initial position
     index++;
@@ -119,14 +119,14 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     while(moving){
         if (client.call(srv))
         {
-            double position = srv.response.pose.position.x;
-            if(position <= prev_position+0.1 && position >= prev_position-0.1){
+            double position = srv.response.pose.position.y;
+            if(position <= prev_position+0.01 && position >= prev_position-0.01){
                 moving = false;
             }
             else {
                 prev_position = position;
             }
-            ROS_INFO("current x-position: %f", position);
+            ROS_INFO("current y-position: %f", position);
             ros::Duration(1).sleep();
         }
         else

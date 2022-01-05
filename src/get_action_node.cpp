@@ -266,20 +266,28 @@ int main(int argc, char **argv) {
   tiago_init_pose.orientation.w = 1.0;
   move_object.request.desPose = tiago_init_pose;
 
-  /*  Initialize Tiago in position    */
-  if (init.call(move_object)) {
-    ROS_INFO_STREAM(
-        "Tiago in correct position?: " << (bool)move_object.response.reply);
-  } else {
-    ROS_ERROR_STREAM("Failed to move Tiago to init position, exiting...");
-    return 1;
-  }
+//   /*  Initialize Tiago in position    */
+//   if (init.call(move_object)) {
+//     ROS_INFO_STREAM(
+//         "Tiago in correct position?: " << (bool)move_object.response.reply);
+//   } else {
+//     ROS_ERROR_STREAM("Failed to move Tiago to init position, exiting...");
+//     return 1;
+//   } 
 
   /*  Open file to save ontology  */
   ofstream ont_File;
   ont_File.open(file_name);
 
   while (ros::ok()) {
+    /*  Initialize Tiago in position after each push   */
+    if (init.call(move_object)) {
+        ROS_INFO_STREAM(
+            "Tiago in correct position?: " << (bool)move_object.response.reply);
+    } else {
+        ROS_ERROR_STREAM("Failed to move Tiago to init position, exiting...");
+        return 1;
+    }
 
     /*  Call the service to spawn a object  */
     if (client_spawn.call(object_object)) {
