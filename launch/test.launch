@@ -25,7 +25,7 @@
 
     <rosparam command="load" file="$(find robotic_pusher)/configs/params.yaml" />
     <!-->node name="gazebo" pkg="gazebo_ros" type="gazebo" output="screen"/-->
-    <node name="spawn_object_node" pkg="robotic_pusher" type="spawn_object_node" args="-d $(find robotic_pusher)/src/spawn_object_node.cpp" output="screen"/>
+    <node name="spawn_cube_node" pkg="robotic_pusher" type="spawn_cube_node.py" args="-d $(find robotic_pusher)/scripts/spawn_cube_node.py" output="screen"/>
     <node name="get_weight_node" pkg="robotic_pusher" type="get_weight_node" args="-d $(find robotic_pusher)/src/get_weight_node.cpp" output="screen"/>
     <node name="pusher_node" pkg="robotic_pusher" type="pusher_node" args="-d $(find robotic_pusher)/src/pusher_node.cpp" output="screen"/>
     <node name="initialize_tiago_node" pkg="robotic_pusher" type="initialize_tiago_node" args="-d $(find robotic_pusher)/src/initialize_tiago_node.cpp" output="screen"/>

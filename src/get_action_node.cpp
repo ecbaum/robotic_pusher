@@ -238,7 +238,7 @@ int main(int argc, char **argv) {
 
   // Clients
   ros::ServiceClient client_spawn =
-      n.serviceClient<robotic_pusher::spawnObject>("spawn_object");
+      n.serviceClient<robotic_pusher::spawnObject>("robotic_pusher/spawn_cube");
   ros::ServiceClient client_weight =
       n.serviceClient<robotic_pusher::getWeightType>("weight_type_service");
   ros::ServiceClient client_push =

@@ -28,7 +28,7 @@ bool get_weight_type(robotic_pusher::getWeightType::Request &req,
     // Client to get the color from get_color_node
     ros::NodeHandle n;
     ros::ServiceClient colorclient =
-    n.serviceClient<robotic_pusher::getColor>("get_color");
+    n.serviceClient<robotic_pusher::getColor>("robotic_pusher/get_color");
     robotic_pusher::getColor srv;
     srv.request.get_color = true;
     if (colorclient.call(srv)) {

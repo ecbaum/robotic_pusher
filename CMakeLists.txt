@@ -164,12 +164,6 @@ file(GLOB SRC_HELPERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/robotic_pusher_node.cpp)
 
-add_executable(spawn_object_node src/spawn_object_node.cpp)
-add_dependencies(spawn_object_node 
-    ${${PROJECT_NAME}_EXPORTED_TARGETS}
-    ${catkin_EXPORTED_TARGETS})
-target_link_libraries(spawn_object_node ${catkin_LIBRARIES})
-
 add_executable(get_weight_node src/get_weight_node.cpp)
 add_dependencies(get_weight_node 
     ${${PROJECT_NAME}_EXPORTED_TARGETS}
