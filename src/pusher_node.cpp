@@ -112,7 +112,7 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     ros::NodeHandle n;
     ros::ServiceClient client = n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
     gazebo_msgs::GetModelState srv;
-    srv.request.model_name = "push_box";
+    srv.request.model_name = "push_cube";
     // Check if we are still moving
     bool moving = true;
     double prev_position = 0;

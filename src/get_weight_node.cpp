@@ -1,3 +1,4 @@
+#include "robotic_pusher/calibrateColor.h"
 #include "robotic_pusher/getColor.h"
 #include "robotic_pusher/getWeightType.h"
 #include "ros/ros.h"
@@ -27,13 +28,25 @@ bool get_weight_type(robotic_pusher::getWeightType::Request &req,
     
     // Client to get the color from get_color_node
     ros::NodeHandle n;
+    
+    ros::ServiceClient calibrateclient =
+    n.serviceClient<robotic_pusher::calibrateColor>("robotic_pusher/calibrate_color");
+    robotic_pusher::calibrateColor srv1;
+    srv1.request.calibrate = true;
+    if (calibrateclient.call(srv1)) {
+        ROS_INFO("Camera calibration successful");
+    } else {
+        ROS_ERROR("Failed to calibrate color");
+        return 1;
+    }
+    
     ros::ServiceClient colorclient =
     n.serviceClient<robotic_pusher::getColor>("robotic_pusher/get_color");
-    robotic_pusher::getColor srv;
-    srv.request.get_color = true;
-    if (colorclient.call(srv)) {
-        ROS_INFO("Color I got is %s", srv.response.object_color.c_str());
-        color = srv.response.object_color;
+    robotic_pusher::getColor srv2;
+    srv2.request.get_color = true;
+    if (colorclient.call(srv2)) {
+        ROS_INFO("Color I got is %s", srv2.response.object_color.c_str());
+        color = srv2.response.object_color;
     } else {
         ROS_ERROR("Failed to get color of Object");
         return 1;
