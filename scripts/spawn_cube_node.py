@@ -32,7 +32,7 @@ class cube_spawner:
     def delete_model_client(self):
         
         rospy.loginfo("Deleting model")
-        rospy.loginfo("Waiting for service 'gazebo/delete_model'")
+        rospy.loginfo("Waiting for service gazebo/delete_model")
         rospy.wait_for_service('gazebo/delete_model')
         response = 0
         try:
@@ -48,6 +48,7 @@ class cube_spawner:
             model_name = random.choice(self.models)
         
         spawn_message = self.spawn_msg_prefix + model_name + self.spawn_msg_suffix
+        rospy.loginfo("Spawning " + model_name)
         rospy.loginfo("Running '" + spawn_message + "'")
         self.object_spawned = True
         os.system(spawn_message)
@@ -61,8 +62,7 @@ class cube_spawner:
         else:
             rospy.loginfo("Delete not successful")
         
-        rospy.loginfo("Spawning: " + req.model_name)
-
+        rospy.loginfo("Model input: " + req.model_name)
         self.run_spawn_message(req.model_name)
 
         return 1

@@ -68,6 +68,7 @@ add_service_files(
 	getWeightType.srv
 	getVelocity.srv
 	moveTiago.srv
+	calibrateColor.srv
     )
 
 

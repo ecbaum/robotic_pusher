@@ -1,0 +1,5 @@
+###Service to get the calibrate pixel to extract color from
+
+bool calibrate
+---
+bool reply
