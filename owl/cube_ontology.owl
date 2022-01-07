@@ -80,33 +80,6 @@
     <owl:Class rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#medium">
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#cube"/>
     </owl:Class>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Individuals
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#yellow1 -->
-
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#yellow1">
-        <rdf:type rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Yellow"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#yellow2 -->
-
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#yellow2">
-        <rdf:type rdf:resource="http://www.semanticweb.org/janmorlock/ontologies/2021/11/untitled-ontology-11#Yellow"/>
-    </owl:NamedIndividual>
 </rdf:RDF>
 
 
