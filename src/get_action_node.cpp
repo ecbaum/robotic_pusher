@@ -44,7 +44,7 @@
 
 using namespace std;
 
-#define object_name "random"
+#define object_name "red_cube"
 #define file_name "ont_file.txt"
 string ontology_name = "cube_ontology";
 #define desired_distance 10 // cm??
@@ -120,6 +120,7 @@ float get_action(string weight, PrologClient pl) {
 }
 
 int load_ontology(PrologClient pl) {
+  /*This will replace everything in the file*/
   string line;
 
   ifstream input_file(file_name);
@@ -141,7 +142,7 @@ string find_instance_name(string instance_name, string Class, PrologClient pl,
                           int i = 0) {
   // owl_individual_of(cube_ontology:'yellow1',cube_ontology:'Yellow').
   PrologQuery bdgs =
-        pl.query("owl_individual_of(" + ontology_name + ":'" + instance_name +
+      pl.query("owl_individual_of(" + ontology_name + ":'" + instance_name +
                "'," + ontology_name + ":'" + Class + "')");
   bool res = false;
   for (auto &it : bdgs) {
@@ -149,7 +150,7 @@ string find_instance_name(string instance_name, string Class, PrologClient pl,
     break;
   }
   if (res) {
-    string instance_name_new = instance_name + to_string(i);
+    string instance_name_new = Class + to_string(i);
     return find_instance_name(instance_name_new, Class, pl, i++);
   } else {
     return instance_name;
@@ -168,6 +169,7 @@ void update_onotology(std::ofstream &file, float distance, float velocity,
   }
   if (res) {
     string instance_name = find_instance_name(object, object, pl);
+    ROS_INFO_STREAM("Instance: " << instance_name);
     string query = "rdf_assert(" + ontology_name + ":'" + instance_name +
                    "', rdf:type, " + ontology_name + ":'" + object + "')";
     /*  Create instance  */
@@ -271,14 +273,14 @@ int main(int argc, char **argv) {
   ont_File.open(file_name);
 
   while (ros::ok()) {
-    
+
     /*  Bring Tiago in position each iteration */
     if (init.call(move_object)) {
-        ROS_INFO_STREAM(
-        "Tiago in correct position?: " << (bool)move_object.response.reply);
+      ROS_INFO_STREAM(
+          "Tiago in correct position?: " << (bool)move_object.response.reply);
     } else {
-        ROS_ERROR_STREAM("Failed to move Tiago to init position, exiting...");
-        return 1;
+      ROS_ERROR_STREAM("Failed to move Tiago to init position, exiting...");
+      return 1;
     }
 
     /*  Call the service to spawn a object  */
