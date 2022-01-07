@@ -126,7 +126,7 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
             else {
                 prev_position = position;
             }
-            ROS_INFO("current y-position: %f", position);
+            // ROS_INFO("current y-position: %f", position);
             ros::Duration(1).sleep();
         }
         else
@@ -154,9 +154,9 @@ int main(int argc, char **argv) {
   ros::NodeHandle nh;
 
   /****************************************************************/
-  /***********************Call pusher_service**********************/
+  /***********************Call robotic_pusher/pusher***************/
   /****************************************************************/
-  ros::ServiceServer service = nh.advertiseService("pusher_service", push_object_get_distance);
+  ros::ServiceServer service = nh.advertiseService("robotic_pusher/pusher", push_object_get_distance);
   ros::spin();
   return 0;
 }

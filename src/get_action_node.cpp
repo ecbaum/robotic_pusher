@@ -240,11 +240,11 @@ int main(int argc, char **argv) {
   ros::ServiceClient client_spawn =
       n.serviceClient<robotic_pusher::spawnObject>("robotic_pusher/spawn_cube");
   ros::ServiceClient client_weight =
-      n.serviceClient<robotic_pusher::getWeightType>("weight_type_service");
+      n.serviceClient<robotic_pusher::getWeightType>("robotic_pusher/weight_type");
   ros::ServiceClient client_push =
-      n.serviceClient<robotic_pusher::getVelocity>("pusher_service");
+      n.serviceClient<robotic_pusher::getVelocity>("robotic_pusher/pusher");
   ros::ServiceClient init =
-      n.serviceClient<robotic_pusher::moveTiago>("moveTiago_service");
+      n.serviceClient<robotic_pusher::moveTiago>("robotic_pusher/moveTiago");
 
   ROS_INFO_STREAM("Connected to all services...");
 
@@ -325,7 +325,7 @@ int main(int argc, char **argv) {
       float y = velocity_object.response.position.y;
       // float z = velocity_object.response.position.z;
       // traveled_distance = sqrtf(x * x + y * y + z * z);
-      traveled_distance = y;
+      traveled_distance = y-0.27;
       ROS_INFO_STREAM("Traveled_distance: " << traveled_distance);
     } else {
       ROS_ERROR_STREAM("Failed to get the position from the object");

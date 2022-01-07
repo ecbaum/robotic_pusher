@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "intialize_tiago");
     ros::NodeHandle nh;
 
-    ros::ServiceServer service = nh.advertiseService("moveTiago_service", move_to_des_pose);
+    ros::ServiceServer service = nh.advertiseService("robotic_pusher/moveTiago", move_to_des_pose);
     ros::spin();
 
     return 0;

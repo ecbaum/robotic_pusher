@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
   // color.
   ROS_INFO("Ready to get the weight class.");
   ros::ServiceServer service =
-      n.advertiseService("weight_type_service", get_weight_type);
+      n.advertiseService("robotic_pusher/weight_type", get_weight_type);
   ros::spin();
 
   return 0;
