@@ -139,9 +139,9 @@ int load_ontology(PrologClient pl) {
 
 string find_instance_name(string instance_name, string Class, PrologClient pl,
                           int i = 0) {
-
+  // owl_individual_of(cube_ontology:'yellow1',cube_ontology:'Yellow').
   PrologQuery bdgs =
-      pl.query("owl_individual_of(" + ontology_name + ":'" + instance_name +
+        pl.query("owl_individual_of(" + ontology_name + ":'" + instance_name +
                "'," + ontology_name + ":'" + Class + "')");
   bool res = false;
   for (auto &it : bdgs) {
@@ -150,7 +150,7 @@ string find_instance_name(string instance_name, string Class, PrologClient pl,
   }
   if (res) {
     string instance_name_new = instance_name + to_string(i);
-    find_instance_name(instance_name_new, Class, pl, i++);
+    return find_instance_name(instance_name_new, Class, pl, i++);
   } else {
     return instance_name;
   }
@@ -266,16 +266,6 @@ int main(int argc, char **argv) {
   tiago_init_pose.orientation.w = 1.0;
   move_object.request.desPose = tiago_init_pose;
 
-  /*  Initialize Tiago in position    */
-  //   if (init.call(move_object)) {
-  //     ROS_INFO_STREAM(
-  //         "Tiago in correct position?: " <<
-  //         (bool)move_object.response.reply);
-  //   } else {
-  //     ROS_ERROR_STREAM("Failed to move Tiago to init position, exiting...");
-  //     return 1;
-  //   }
-
   /*  Open file to save ontology  */
   ofstream ont_File;
   ont_File.open(file_name);
@@ -331,10 +321,11 @@ int main(int argc, char **argv) {
 
     float traveled_distance;
     if (client_push.call(velocity_object)) {
-      float x = velocity_object.response.position.x;
+      // float x = velocity_object.response.position.x;
       float y = velocity_object.response.position.y;
-      float z = velocity_object.response.position.z;
-      traveled_distance = sqrtf(x * x + y * y + z * z);
+      // float z = velocity_object.response.position.z;
+      // traveled_distance = sqrtf(x * x + y * y + z * z);
+      traveled_distance = y;
       ROS_INFO_STREAM("Traveled_distance: " << traveled_distance);
     } else {
       ROS_ERROR_STREAM("Failed to get the position from the object");

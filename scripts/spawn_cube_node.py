@@ -27,7 +27,7 @@ class cube_spawner:
 
         self.models = ["red_cube", "blue_cube", "green_cube", "yellow_cube"]
 
-        self.delete_model_client()
+        #self.delete_model_client()
 
     def delete_model_client(self):
         
