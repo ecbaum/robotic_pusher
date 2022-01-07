@@ -22,6 +22,7 @@ ontology and gives the weight class and color to the get_action_node.cpp
 // owl_subclass_of(cube:'gold', A).
 
 string color;
+bool first = true;
 
 bool get_weight_type(robotic_pusher::getWeightType::Request &req,
                      robotic_pusher::getWeightType::Response &res) {
@@ -29,16 +30,23 @@ bool get_weight_type(robotic_pusher::getWeightType::Request &req,
     // Client to get the color from get_color_node
     ros::NodeHandle n;
     
-    ros::ServiceClient calibrateclient =
-    n.serviceClient<robotic_pusher::calibrateColor>("robotic_pusher/calibrate_color");
-    robotic_pusher::calibrateColor srv1;
-    srv1.request.calibrate = true;
-    if (calibrateclient.call(srv1)) {
-        ROS_INFO("Camera calibration successful");
-    } else {
-        ROS_ERROR("Failed to calibrate color");
-        return 1;
+    // Do calibration only once
+    if(first){
+        ros::ServiceClient calibrateclient =
+        n.serviceClient<robotic_pusher::calibrateColor>("robotic_pusher/calibrate_color");
+        robotic_pusher::calibrateColor srv1;
+        srv1.request.calibrate = true;
+        if (calibrateclient.call(srv1)) {
+            ROS_INFO("Camera calibration successful");
+        } else {
+            ROS_ERROR("Failed to calibrate color");
+            return 1;
+        }
+        first = false;
     }
+
+    // Wait task to be finished
+    ros::Duration(1).sleep();
     
     ros::ServiceClient colorclient =
     n.serviceClient<robotic_pusher::getColor>("robotic_pusher/get_color");
