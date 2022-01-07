@@ -238,7 +238,7 @@ int main(int argc, char **argv) {
 
   // Clients
   ros::ServiceClient client_spawn =
-      n.serviceClient<robotic_pusher::spawnObject>("spawn_object");
+      n.serviceClient<robotic_pusher::spawnObject>("robotic_pusher/spawn_cube");
   ros::ServiceClient client_weight =
       n.serviceClient<robotic_pusher::getWeightType>("weight_type_service");
   ros::ServiceClient client_push =
@@ -281,6 +281,15 @@ int main(int argc, char **argv) {
   ont_File.open(file_name);
 
   while (ros::ok()) {
+    
+    /*  Bring Tiago in position each iteration */
+    if (init.call(move_object)) {
+        ROS_INFO_STREAM(
+        "Tiago in correct position?: " << (bool)move_object.response.reply);
+    } else {
+        ROS_ERROR_STREAM("Failed to move Tiago to init position, exiting...");
+        return 1;
+    }
 
     /*  Call the service to spawn a object  */
     if (client_spawn.call(object_object)) {
