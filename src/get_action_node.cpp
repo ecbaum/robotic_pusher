@@ -47,7 +47,7 @@ using namespace std;
 #define object_name "random"
 #define file_name "ont_file.txt"
 string ontology_name = "cube_ontology";
-#define desired_distance 10 // cm??
+#define desired_distance 0.4 // cm??
 
 /*  Weight ids  */
 std::map<std::string, int> weight_id{
@@ -65,10 +65,10 @@ float get_action(string weight, PrologClient pl) {
 
   PrologQuery bdgs =
       pl.query("owl_individual_of(I," + ontology_name + ":" + weight + ")");
-
   for (PrologQuery::iterator it = bdgs.begin(); it != bdgs.end(); it++) {
     PrologBindings bdg = *it;
     string instance = bdg["I"].toString();
+    instance = instance.substr(instance.find("#") + 1, instance.length());
     /*  Extract distance    */
     PrologQuery classbdgs =
         pl.query("rdf(" + ontology_name + ":'" + instance + "', distance, X)");
