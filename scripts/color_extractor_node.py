@@ -14,7 +14,11 @@ class color_extractor:
 
         self.subscriber = rospy.Subscriber("/xtion/rgb/image_color", Image, self.callback)
         self.service = rospy.Service('robotic_pusher/get_color', getColor, self.returnColor)
+        self.service_full = rospy.Service('robotic_pusher/full_color_search', getColor, self.full_color_search)
+
         self.service_calibrate = rospy.Service('robotic_pusher/calibrate_color', calibrateColor, self.calibrate_callback    )
+        
+
 
         self.bridge = CvBridge()
         self.color_value = []
@@ -57,6 +61,33 @@ class color_extractor:
         else:
             rospy.loginfo("Calibration error: no image loaded")
             return 0
+    
+    def full_color_search(self, req):
+        img_local = self.img
+        if img_local is not None:
+            color_found = None
+            rospy.loginfo("Full color search")
+            find = False
+            for x in range(1,360,5):
+                for y in range(1,480,5):
+                    color_value = img_local[x, y, 0:3]
+                    color = self.decodeRGB(color_value)
+                    if (color != 'White') and (color != 'Black'): 
+                        color_found = color                     
+                        find = True
+                        break
+                    if find:
+                        break
+            if color_found is not None:
+                rospy.loginfo("Found color: " + color_found)
+                return color_found
+            else:
+                rospy.loginfo("No pixels of color found")
+                return 'no_color'
+        else:
+            rospy.loginfo("No image loaded")
+            return 'no_color'
+
 
     def calibrate_callback(self, req):
         response = self.calibrate()
