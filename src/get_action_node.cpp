@@ -140,7 +140,6 @@ int load_ontology(PrologClient pl) {
 
 string find_instance_name(string instance_name, string Class, PrologClient pl,
                           int i = 0) {
-  // owl_individual_of(cube_ontology:'yellow1',cube_ontology:'Yellow').
   PrologQuery bdgs =
       pl.query("owl_individual_of(" + ontology_name + ":'" + instance_name +
                "'," + ontology_name + ":'" + Class + "')");
@@ -151,7 +150,8 @@ string find_instance_name(string instance_name, string Class, PrologClient pl,
   }
   if (res) {
     string instance_name_new = Class + to_string(i);
-    return find_instance_name(instance_name_new, Class, pl, i++);
+    ROS_INFO_STREAM("Instance name: " << instance_name_new);
+    return find_instance_name(instance_name_new, Class, pl, ++i);
   } else {
     return instance_name;
   }
@@ -159,6 +159,7 @@ string find_instance_name(string instance_name, string Class, PrologClient pl,
 
 void update_onotology(std::ofstream &file, float distance, float velocity,
                       string object, PrologClient pl) {
+  ROS_INFO_STREAM("Updating the ontology...");
   /*    Check if class exist    */
   PrologQuery bdgs = pl.query("rdf_has(" + ontology_name + ":'" + object +
                               "', rdf:type, owl:'Class')");
@@ -242,7 +243,8 @@ int main(int argc, char **argv) {
   ros::ServiceClient client_spawn =
       n.serviceClient<robotic_pusher::spawnObject>("robotic_pusher/spawn_cube");
   ros::ServiceClient client_weight =
-      n.serviceClient<robotic_pusher::getWeightType>("robotic_pusher/weight_type");
+      n.serviceClient<robotic_pusher::getWeightType>(
+          "robotic_pusher/weight_type");
   ros::ServiceClient client_push =
       n.serviceClient<robotic_pusher::getVelocity>("robotic_pusher/pusher");
   ros::ServiceClient init =
@@ -270,7 +272,7 @@ int main(int argc, char **argv) {
 
   /*  Open file to save ontology  */
   ofstream ont_File;
-  ont_File.open(file_name);
+  ont_File.open(file_name, std::ios_base::app);
 
   while (ros::ok()) {
 
@@ -327,7 +329,7 @@ int main(int argc, char **argv) {
       float y = velocity_object.response.position.y;
       // float z = velocity_object.response.position.z;
       // traveled_distance = sqrtf(x * x + y * y + z * z);
-      traveled_distance = y-0.27;
+      traveled_distance = y - 0.27;
       ROS_INFO_STREAM("Traveled_distance: " << traveled_distance);
     } else {
       ROS_ERROR_STREAM("Failed to get the position from the object");
