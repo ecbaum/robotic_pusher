@@ -1,14 +1,7 @@
-spawn_position:
-  x: 1.03
-  y: 0.27
-  z: 1.5
+velocity:
+  take_param: False
+  value: .99
 
-color_extraction_pixel_location:
-  x: 360
-  y: 0
+object_name: "random"
 
-spawn_cube_names:
-  name1: "red_cube"
-  name2: "blue_cube"
-  name3: "green_cube"
-  name4: "yellow_cube"
+desired_distance: 0.4

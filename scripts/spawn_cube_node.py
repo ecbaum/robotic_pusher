@@ -16,8 +16,8 @@ class cube_spawner:
 
         self.service = rospy.Service('robotic_pusher/spawn_cube', spawnObject, self.callback_srv)
 
-        self.x = 1
-        self.y = 0.27
+        self.x = 1.05
+        self.y = 0.26
         self.z = 1.14
 
         self.position = "-x " + str(self.x) + " -y " + str(self.y) + " -z " + str(self.z)

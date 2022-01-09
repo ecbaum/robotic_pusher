@@ -44,10 +44,15 @@
 
 using namespace std;
 
-#define object_name "random"
 #define file_name "ont_file.txt"
 string ontology_name = "cube_ontology";
-#define desired_distance 0.4 // cm??
+
+// Now as parameters instead, see params.yaml
+string object_name;
+float desired_distance; // cm??
+float push_velocity = 0;
+float velocity_value_param;
+bool velocity_take_param;
 
 /*  Weight ids  */
 std::map<std::string, int> weight_id{
@@ -150,7 +155,7 @@ string find_instance_name(string instance_name, string Class, PrologClient pl,
   }
   if (res) {
     string instance_name_new = Class + to_string(i);
-    ROS_INFO_STREAM("Instance name: " << instance_name_new);
+    //ROS_INFO_STREAM("Instance name: " << instance_name_new);
     return find_instance_name(instance_name_new, Class, pl, ++i);
   } else {
     return instance_name;
@@ -258,7 +263,6 @@ int main(int argc, char **argv) {
   robotic_pusher::moveTiago move_object;
 
   weight_object.request.get_weight_class = true;
-  object_object.request.model_name = object_name;
   object_object.request.training = training;
 
   geometry_msgs::Pose tiago_init_pose;
@@ -276,6 +280,37 @@ int main(int argc, char **argv) {
   ont_File.open(file_name, std::ios_base::app);
 
   while (ros::ok()) {
+    /*********************************************************************
+    * Load params
+    * ******************************************************************/
+    
+    if (ros::param::has("/velocity/take_param")) {
+        ros::param::get("/velocity/take_param", velocity_take_param);
+    } else {
+        ROS_ERROR_STREAM("param: /velocity/take_param, doesn't exist");
+        return 1;
+    }
+
+    if (ros::param::has("/velocity/value")) {
+        ros::param::get("/velocity/value", velocity_value_param);
+    } else {
+        ROS_ERROR_STREAM("param: /velocity/value, doesn't exist");
+        return 1;
+    }
+
+    if (ros::param::has("object_name")) {
+        ros::param::get("object_name", object_name);
+    } else {
+        ROS_ERROR_STREAM("param: /object_name, doesn't exist");
+        return 1;
+    }
+
+    if (ros::param::has("/desired_distance")) {
+        ros::param::get("/desired_distance", desired_distance);
+    } else {
+        ROS_ERROR_STREAM("param: /desired_distance, doesn't exist");
+        return 1;
+    }
 
     /*  Bring Tiago in position each iteration */
     if (init.call(move_object)) {
@@ -285,9 +320,12 @@ int main(int argc, char **argv) {
       ROS_ERROR_STREAM("Failed to move Tiago to init position, exiting...");
       return 1;
     }
-
+    /*********************************************************************
+    * Perform action
+    * ******************************************************************/
     ROS_INFO_STREAM("++++++NEW CUBE++++++");
     
+    object_object.request.model_name = object_name;
     /*  Call the service to spawn a object  */
     if (client_spawn.call(object_object)) {
       ROS_INFO_STREAM("Spawn succesful: " << object_object.response.reply);
@@ -305,21 +343,26 @@ int main(int argc, char **argv) {
     if (client_weight.call(weight_object)) {
       object_weight_type = weight_object.response.weight_type;
       object_weight_color = weight_object.response.object_color;
-      ROS_INFO_STREAM("weight type and color of object: " << object_weight_type << " "
+      ROS_INFO_STREAM("weight type, color: " << object_weight_type << " "
                                    << object_weight_color);
     } else {
       ROS_ERROR_STREAM("Failed to get the weight from the object");
       return 1;
     }
 
-    float push_velocity;
-    if (training) {
-      // Random between 0.f and 1.f
-      push_velocity =
-          static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-    } else {
-      push_velocity =
-          get_action(object_weight_type, pl);
+    if(velocity_take_param){
+        push_velocity = velocity_value_param;
+    }
+    else{
+        if (training) {
+            // Random between 0.f and 1.f
+            //push_velocity = push_velocity+0.1f;
+            push_velocity =
+                static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+        } else {
+            push_velocity =
+                get_action(object_weight_type, pl);
+        }
     }
     ROS_INFO_STREAM("Velocity: " << push_velocity);
     velocity_object.request.impact_velocity = push_velocity;
@@ -333,7 +376,7 @@ int main(int argc, char **argv) {
       float y = velocity_object.response.position.y;
       // float z = velocity_object.response.position.z;
       // traveled_distance = sqrtf(x * x + y * y + z * z);
-      traveled_distance = y - 0.27;
+      traveled_distance = y - 0.26;
       ROS_INFO_STREAM("Traveled_distance: " << traveled_distance);
     } else {
       ROS_ERROR_STREAM("Failed to get the position from the object");
