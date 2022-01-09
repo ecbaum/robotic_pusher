@@ -3,6 +3,7 @@
 #model_name=<object_name> will spawn a specific object
 #model_name=random will spawn one of the defined objects randomly
 string model_name
+bool training
 ---
 #reply=1 if spawning succesful
 int32 reply

@@ -8,10 +8,10 @@
 
 using namespace std;
 
-/*
-This node takes the color of color_extractor_node.py, creates an instance in the
-ontology and gives the weight class and color to the get_action_node.cpp
-*/
+/********
+This node takes the color of color_extractor_node.py, gets the corresponding
+weight class and returns the weight class and color to the get_action_node.cpp
+********/
 
 // Explore possible queries
 // rdf_has(S, rdfs:subPropertyOf, cube:'color').
@@ -22,6 +22,7 @@ ontology and gives the weight class and color to the get_action_node.cpp
 // owl_subclass_of(cube:'gold', A).
 
 string color;
+bool b_full_color_search = true; // Color detection works better when true
 bool first = true;
 
 bool get_weight_type(robotic_pusher::getWeightType::Request &req,
@@ -29,35 +30,50 @@ bool get_weight_type(robotic_pusher::getWeightType::Request &req,
     
     // Client to get the color from get_color_node
     ros::NodeHandle n;
-    
-    // Do calibration only once
-    if(first){
-        ros::ServiceClient calibrateclient =
-        n.serviceClient<robotic_pusher::calibrateColor>("robotic_pusher/calibrate_color");
-        robotic_pusher::calibrateColor srv1;
-        srv1.request.calibrate = true;
-        if (calibrateclient.call(srv1)) {
-            ROS_INFO("Camera calibration successful");
+
+    if (b_full_color_search){
+    ros::ServiceClient calibrateclient =
+    n.serviceClient<robotic_pusher::getColor>("robotic_pusher/full_color_search");
+    robotic_pusher::getColor srv0;
+    srv0.request.get_color = true;
+    if (calibrateclient.call(srv0)) {
+        ROS_INFO("Full color search gives color %s", srv0.response.object_color.c_str());
+        color = srv0.response.object_color;
+    } else {
+        ROS_ERROR("Failed to do full color search");
+        return 1;
+    }
+    }
+    else{
+        // Do calibration only once
+        if(first){
+            ros::ServiceClient calibrateclient =
+            n.serviceClient<robotic_pusher::calibrateColor>("robotic_pusher/calibrate_color");
+            robotic_pusher::calibrateColor srv1;
+            srv1.request.calibrate = true;
+            if (calibrateclient.call(srv1)) {
+                ROS_INFO("Camera calibration successful");
+            } else {
+                ROS_ERROR("Failed to calibrate color");
+                return 1;
+            }
+            first = false;
+        }
+
+        // Wait task to be finished
+        ros::Duration(1).sleep();
+        
+        ros::ServiceClient colorclient =
+        n.serviceClient<robotic_pusher::getColor>("robotic_pusher/get_color");
+        robotic_pusher::getColor srv2;
+        srv2.request.get_color = true;
+        if (colorclient.call(srv2)) {
+            ROS_INFO("Color I got is %s", srv2.response.object_color.c_str());
+            color = srv2.response.object_color;
         } else {
-            ROS_ERROR("Failed to calibrate color");
+            ROS_ERROR("Failed to get color of Object");
             return 1;
         }
-        first = false;
-    }
-
-    // Wait task to be finished
-    ros::Duration(1).sleep();
-    
-    ros::ServiceClient colorclient =
-    n.serviceClient<robotic_pusher::getColor>("robotic_pusher/get_color");
-    robotic_pusher::getColor srv2;
-    srv2.request.get_color = true;
-    if (colorclient.call(srv2)) {
-        ROS_INFO("Color I got is %s", srv2.response.object_color.c_str());
-        color = srv2.response.object_color;
-    } else {
-        ROS_ERROR("Failed to get color of Object");
-        return 1;
     }
     
     PrologClient pl = PrologClient("/rosprolog", true);

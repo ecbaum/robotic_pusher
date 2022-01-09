@@ -17,6 +17,7 @@ into `simulation_ws/src/pal_gazebo_worlds/launch/pal_gazebo.launch`
 First:
 
     roslaunch robotic_pusher test.launch
+    roslaunch robotic_pusher test.launch gzpose:="-x -1.0 -y -1.0 -z 0.0 -R 0.0 -P 0.0 -Y 0.0"
 
 Second:
 

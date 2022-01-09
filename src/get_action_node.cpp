@@ -44,7 +44,7 @@
 
 using namespace std;
 
-#define object_name "red_cube"
+#define object_name "random"
 #define file_name "ont_file.txt"
 string ontology_name = "cube_ontology";
 #define desired_distance 10 // cm??
@@ -259,6 +259,7 @@ int main(int argc, char **argv) {
 
   weight_object.request.get_weight_class = true;
   object_object.request.model_name = object_name;
+  object_object.request.training = training;
 
   geometry_msgs::Pose tiago_init_pose;
   tiago_init_pose.position.x = 0.0;
@@ -285,16 +286,17 @@ int main(int argc, char **argv) {
       return 1;
     }
 
+    ROS_INFO_STREAM("++++++NEW CUBE++++++");
+    
     /*  Call the service to spawn a object  */
     if (client_spawn.call(object_object)) {
-      ROS_INFO_STREAM("Response: " << object_object.response.reply);
+      ROS_INFO_STREAM("Spawn succesful: " << object_object.response.reply);
     } else {
       ROS_ERROR_STREAM("Failed to spawn a random object");
       return 1;
     }
 
     // Wait task to be finished
-    ROS_INFO("Wait shortly to make sure previous task is finished.");
     ros::Duration(1).sleep();
 
     string object_weight_type;
@@ -303,24 +305,26 @@ int main(int argc, char **argv) {
     if (client_weight.call(weight_object)) {
       object_weight_type = weight_object.response.weight_type;
       object_weight_color = weight_object.response.object_color;
-      ROS_INFO_STREAM("Response: " << object_weight_type << " "
+      ROS_INFO_STREAM("weight type and color of object: " << object_weight_type << " "
                                    << object_weight_color);
     } else {
       ROS_ERROR_STREAM("Failed to get the weight from the object");
       return 1;
     }
 
+    float push_velocity;
     if (training) {
       // Random between 0.f and 1.f
-      velocity_object.request.impact_velocity =
+      push_velocity =
           static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
     } else {
-      velocity_object.request.impact_velocity =
+      push_velocity =
           get_action(object_weight_type, pl);
     }
+    ROS_INFO_STREAM("Velocity: " << push_velocity);
+    velocity_object.request.impact_velocity = push_velocity;
 
     // Wait task to be finished
-    ROS_INFO_STREAM("Wait shortly to make sure previous task is finished.");
     ros::Duration(1).sleep();
 
     float traveled_distance;

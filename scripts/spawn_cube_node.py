@@ -18,7 +18,7 @@ class cube_spawner:
 
         self.x = 1
         self.y = 0.27
-        self.z = 1.5
+        self.z = 1.14
 
         self.position = "-x " + str(self.x) + " -y " + str(self.y) + " -z " + str(self.z)
 
@@ -26,6 +26,7 @@ class cube_spawner:
         self.spawn_msg_suffix = "/model.sdf" + " -sdf " + self.position + " -model push_cube"
 
         self.models = ["red_cube", "blue_cube", "green_cube", "yellow_cube"]
+        self.models_training = ["red_cube", "blue_cube", "green_cube"]
 
         #self.delete_model_client()
 
@@ -43,9 +44,12 @@ class cube_spawner:
             rospy.loginfo("Service call failed: %s"%e)
         return response
     
-    def run_spawn_message(self, model_name):
+    def run_spawn_message(self, model_name, training):
         if model_name == 'random':
-            model_name = random.choice(self.models)
+            if training:
+                model_name = random.choice(self.models_training)
+            else:
+                model_name = random.choice(self.models)
         
         spawn_message = self.spawn_msg_prefix + model_name + self.spawn_msg_suffix
         rospy.loginfo("Spawning " + model_name)
@@ -63,7 +67,7 @@ class cube_spawner:
             rospy.loginfo("Delete not successful")
         
         rospy.loginfo("Model input: " + req.model_name)
-        self.run_spawn_message(req.model_name)
+        self.run_spawn_message(req.model_name, req.training)
 
         return 1
         

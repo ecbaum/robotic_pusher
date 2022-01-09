@@ -138,7 +138,7 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     // Give final cube position as response
     if (client.call(srv))
         {
-            ROS_INFO("Final position: x: %f, y: %f, y: %f", srv.response.pose.position.x, srv.response.pose.position.y, srv.response.pose.position.z);
+            ROS_INFO("Final position: x: %f, y: %f, z: %f", srv.response.pose.position.x, srv.response.pose.position.y, srv.response.pose.position.z);
             res.position = srv.response.pose.position;
         }
         else
