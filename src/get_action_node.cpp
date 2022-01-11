@@ -124,7 +124,7 @@ float get_action(string weight, PrologClient pl) {
 
   ROS_INFO_STREAM("Closest distances: " << distance_vector[lower_bound] << " : "
                                         << distance_vector[upper_bound]
-                                        << " Desired distance: " << t);
+                                        << " Desired distance: " << desired_distance);
 
   return a + t * (b - a);
 }
@@ -362,7 +362,7 @@ int main(int argc, char **argv) {
         push_velocity =
             static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
       } else {
-        ROS_ERROR_STREAM("Desired Distance: " << desired_distance);
+        ROS_INFO_STREAM("Desired Distance: " << desired_distance);
         push_velocity = get_action(object_weight_type, pl);
       }
     }
@@ -376,7 +376,6 @@ int main(int argc, char **argv) {
     if (client_push.call(velocity_object)) {
       float y = velocity_object.response.position.y;
       traveled_distance = y - 0.26;
-      ROS_INFO_STREAM("Traveled_distance: " << traveled_distance);
     } else {
       ROS_ERROR_STREAM("Failed to get the position from the object");
       return 1;
@@ -385,10 +384,10 @@ int main(int argc, char **argv) {
     if (!training){
         float error_distance = abs(traveled_distance-desired_distance);
         if (error_distance < 0.175){
-            ROS_INFO_STREAM("Desired distance REACHED (error distance " << traveled_distance << " is within the margin)");
+            ROS_INFO_STREAM("Desired distance REACHED (error distance " << error_distance << " is within the margin)");
         }
         else {
-            ROS_WARN_STREAM("Desired distance NOT REACHED (error distance: " << traveled_distance << ")");
+            ROS_WARN_STREAM("Desired distance NOT REACHED (error distance: " << error_distance << ")");
         }
     }
 
