@@ -1,4 +1,3 @@
-#include <exception>
 #include <string>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
@@ -12,6 +11,13 @@ typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction>
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveClient;
 
 bool move_to_des_pose(robotic_pusher::moveTiago::Request  &req, robotic_pusher::moveTiago::Response &res){
+    if (!ros::Time::waitForValid(ros::WallDuration(
+            30.0))) // NOTE: Important when using simulated clock
+    {
+        ROS_FATAL("Timed-out waiting for valid time.");
+        return false;
+    }
+    
     /****************************************************************/
     /***********************Move to table****************************/
     /****************************************************************/
@@ -33,18 +39,13 @@ bool move_to_des_pose(robotic_pusher::moveTiago::Request  &req, robotic_pusher::
     client.sendGoal(goal);
     client.waitForResult();
     if (client.getState() == actionlib::SimpleClientGoalState::SUCCEEDED) {
+        ROS_INFO("At the table");
     }
     else {
         ROS_ERROR("Failed to move to the desired Pose :(");
         return false;
     }
 
-    if (!ros::Time::waitForValid(ros::WallDuration(
-            30.0))) // NOTE: Important when using simulated clock
-    {
-        ROS_FATAL("Timed-out waiting for valid time.");
-        return false;
-    }
     /****************************************************************/
     /***********************Move the torso up************************/
     /****************************************************************/

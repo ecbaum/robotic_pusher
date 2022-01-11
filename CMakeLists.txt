@@ -12,7 +12,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  move_base_msgs
   geometry_msgs
+  control_msgs
   message_runtime
   rosprolog
   actionlib

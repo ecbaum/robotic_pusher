@@ -10,18 +10,11 @@
     <!-- spawn robot in simulation -->
     <include file="$(find tiago_2dnav_gazebo)/launch/tiago_navigation.launch">
         <arg name="public_sim" value="true"/>
+        <arg name="gzpose" value="$(arg gzpose)"/>
         <arg name="map" value="$(find robotic_pusher)/map/tiago_maps/configurations/2021-12-23_092911"/>
         <arg name="world" value="pusher_world"/>
-        <arg name="gzpose" value="$(arg gzpose)"/>
         <arg name="robot" value="steel"/>
     </include>
-
-    <!-->include file="$(find tiago_gazebo)/launch/tiago_gazebo.launch">
-        <arg name="public_sim" value="true"/>
-        <arg name="robot" value="steel"/>
-        <arg name="world" value="pusher_world"/>
-        <arg name="gzpose" value="$(arg gzpose)"/>
-    </include-->
 
     <rosparam command="load" file="$(find robotic_pusher)/configs/params.yaml" />
     <!-->node name="gazebo" pkg="gazebo_ros" type="gazebo" output="screen"/-->

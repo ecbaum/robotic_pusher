@@ -65,6 +65,8 @@
   <depend>rosprolog</depend>
   <depend>actionlib</depend>
   <depend>gazebo_msgs</depend>
+  <depend>move_base_msgs</depend>
+  <depend>control_msgs</depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

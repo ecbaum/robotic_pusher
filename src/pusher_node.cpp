@@ -9,8 +9,6 @@
 #include <string>
 #include "gazebo_msgs/GetModelState.h"
 
-// TODO: Adjust velocity mapping and threshhold for moving criteria
-
 typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> JointClient;
 
 // helper function, constrains the the variable x between the lower value a and higher value b
@@ -71,7 +69,7 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     arm_goal.trajectory.points[index] = arm_goal.trajectory.points[0];
     // Positions
     arm_goal.trajectory.points[index].positions[0] = 1.6;
-    arm_goal.trajectory.points[index].positions[3] = -0.05;
+    arm_goal.trajectory.points[index].positions[3] = -0.03;
     // To be reached 4 second after starting along the trajectory
     arm_goal.trajectory.points[index].time_from_start = ros::Duration(2.0);
 
@@ -79,7 +77,7 @@ bool push_object_get_distance(robotic_pusher::getVelocity::Request  &req, roboti
     index++;
     arm_goal.trajectory.points[index] = arm_goal.trajectory.points[0];
     // To be reached 6 second after starting along the trajectory
-    arm_goal.trajectory.points[index].time_from_start = ros::Duration(4.0);
+    arm_goal.trajectory.points[index].time_from_start = ros::Duration(3.0);
 
     arm_goal.trajectory.header.stamp = ros::Time::now();
     armClient.sendGoal(arm_goal);

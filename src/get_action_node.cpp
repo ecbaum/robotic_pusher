@@ -359,11 +359,10 @@ int main(int argc, char **argv) {
       push_velocity = velocity_value_param;
     } else {
       if (training) {
-        // Random between 0.f and 1.f
-        // push_velocity = push_velocity+0.1f;
         push_velocity =
             static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
       } else {
+        ROS_ERROR_STREAM("Desired Distance: " << desired_distance);
         push_velocity = get_action(object_weight_type, pl);
       }
     }
@@ -375,10 +374,7 @@ int main(int argc, char **argv) {
 
     float traveled_distance;
     if (client_push.call(velocity_object)) {
-      // float x = velocity_object.response.position.x;
       float y = velocity_object.response.position.y;
-      // float z = velocity_object.response.position.z;
-      // traveled_distance = sqrtf(x * x + y * y + z * z);
       traveled_distance = y - 0.26;
       ROS_INFO_STREAM("Traveled_distance: " << traveled_distance);
     } else {
@@ -386,10 +382,20 @@ int main(int argc, char **argv) {
       return 1;
     }
 
+    if (!training){
+        float error_distance = abs(traveled_distance-desired_distance);
+        if (error_distance < 0.175){
+            ROS_INFO_STREAM("Desired distance REACHED (error distance " << traveled_distance << " is within the margin)");
+        }
+        else {
+            ROS_WARN_STREAM("Desired distance NOT REACHED (error distance: " << traveled_distance << ")");
+        }
+    }
+
     if (training)
       update_onotology(ont_File, traveled_distance,
                        velocity_object.request.impact_velocity,
-                       object_weight_color, pl); // TODO
+                       object_weight_color, pl);
   }
   /*    Save ontology here   */
   ont_File.close();

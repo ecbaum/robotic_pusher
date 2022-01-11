@@ -1,7 +1,7 @@
 velocity:
   take_param: False
-  value: .99
+  value: .1
 
-object_name: "random"
+object_name: "blue_cube"
 
 desired_distance: 0.4
