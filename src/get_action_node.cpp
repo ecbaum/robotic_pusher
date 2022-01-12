@@ -67,7 +67,6 @@ float get_action(string weight, PrologClient pl) {
 
   std::vector<float> distance_vector;
   std::vector<float> velocity_vector;
-
   PrologQuery bdgs =
       pl.query("owl_individual_of(I," + ontology_name + ":" + weight + ")");
   for (PrologQuery::iterator it = bdgs.begin(); it != bdgs.end(); it++) {
@@ -81,7 +80,7 @@ float get_action(string weight, PrologClient pl) {
     bdg = *iterator;
     string distance = bdg["X"].toString();
     distance = distance.substr(distance.find("#") + 1, distance.length());
-    distance.erase(0, 1);
+    //distance.erase(0, 1);
     distance.erase(distance.size() - 1);
     float distance_traveled = std::stof(distance);
     distance_vector.push_back(distance_traveled);
@@ -97,14 +96,12 @@ float get_action(string weight, PrologClient pl) {
     float used_velocity = std::stof(velocity);
     velocity_vector.push_back(used_velocity);
   }
-
   /*  Find the closest points in distance     */
   float min_upper = FLT_MAX, min_lower = FLT_MAX;
   int lower_bound, upper_bound, index = 0;
 
   for (float d : distance_vector) {
     float diff = abs(d - desired_distance);
-
     if (diff < min_upper && d > desired_distance) {
       min_upper = diff;
       upper_bound = index;
@@ -376,6 +373,7 @@ int main(int argc, char **argv) {
     if (client_push.call(velocity_object)) {
       float y = velocity_object.response.position.y;
       traveled_distance = y - 0.26;
+      ROS_INFO_STREAM("Traveled distance: " << traveled_distance);
     } else {
       ROS_ERROR_STREAM("Failed to get the position from the object");
       return 1;
